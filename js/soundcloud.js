@@ -1,15 +1,7 @@
-var play = document.getElementById('play');
-var pause = document.getElementById('pause');
-var username = document.getElementById('username');
-var player = document.getElementById('player')
-var ul = document.getElementById('track-listing');
-var node = document.createElement('LI');
 
-
-SC.initialize({
-    client_id: 'd1406a91a61f2077f85d9e0687a6ad75',
-    redirect_uri: 'http://0.0.0.0:8080/redirect.html'
-});
+var trackName = document.getElementById('track-name');
+var artist = document.getElementById('artist');
+var artwork = document.getElementById('artwork');
 
 // SC.stream('/tracks/293', function(sound){
 //  play.addEventListener('click', function(e){
@@ -30,7 +22,46 @@ SC.initialize({
 
 // mySounds();
 
+
+// helper function to get user id of specific artist on soundcloud
+//takes in a string version of the url appends it to the resolve api reference
+// function getId(url) {
+//     SC.get('/resolve/?url=' + url, function(result) {
+//         console.log(result);
+//     });
+// }
+//getId('https://soundcloud.com/Soulection');
+
+
+SC.initialize({
+    client_id: 'd1406a91a61f2077f85d9e0687a6ad75',
+    redirect_uri: 'http://0.0.0.0:8080/redirect.html'
+});
+
+//return length of track in miliseconds
+function getTrackDuration(track) {
+    //console.log(track.duration);
+    return track.duration;
+}
+
+function getTrackName(track){
+    return track.title;
+}
+
+function getArtistName(track){
+    return track.user.username;
+}
+
+function getBackground(track){
+    var img = document.createElement('img');
+    img.src = track.artwork_url;
+    return track.artwork_url;
+}
+
 function playMusic(track) {
+    var play = document.getElementById('play');
+    var pause = document.getElementById('pause');
+
     SC.stream('/tracks/' + track.id, function(track) {
         play.addEventListener('click', function(e) {
             play.style.visibility = 'hidden';
@@ -46,31 +77,23 @@ function playMusic(track) {
     });
 }
 
-// helper function that return length of track in miliseconds
-function getTrackDuration(track) {
-    //console.log(track.duration);
-    return track.duration;
-}
+
 
 function selectedArtist() {
     SC.get('/tracks', {
         user_id: 483960,
         limit: 20
     }, function(tracks) {
-        console.log(tracks);
+        //console.log(tracks);
         var random = Math.floor(Math.random() * tracks.length);
         var duration = getTrackDuration(tracks[random]);
-        console.log(duration);
+        //console.log(duration);
+        console.log(tracks[random]);
         playMusic(tracks[random]);
+        trackName.textContent = getTrackName(tracks[random]);
+        artist.textContent = 'Artist: ' + getArtistName(tracks[random]);
     });
 }
 
-// helper function to get user id of specific artist on soundcloud
-//takes in a string version of the url appends it to the resolve api reference
-// function getId(url) {
-//     SC.get('/resolve/?url=' + url, function(result) {
-//         console.log(result);
-//     });
-// }
-//getId('https://soundcloud.com/Soulection');
+
 selectedArtist();

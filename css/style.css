@@ -1,0 +1,13 @@
+html,
+body{
+	top: 0;
+	left: 0;
+}
+
+#track-name{
+	text-align: center;
+}
+
+#artist{
+	text-align: center;
+}
