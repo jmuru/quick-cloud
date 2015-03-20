@@ -12,20 +12,20 @@ SC.initialize({
 });
 
 // SC.stream('/tracks/293', function(sound){
-// 	play.addEventListener('click', function(e){
-// 		sound.start();
-// 	});
-// 	pause.addEventListener('click', function(e){
-// 		sound.pause();
-// 	});
+//  play.addEventListener('click', function(e){
+//      sound.start();
+//  });
+//  pause.addEventListener('click', function(e){
+//      sound.pause();
+//  });
 // });
 
 // function mySounds(){
-// 	SC.connect(function(){
-// 		SC.get('/me', function(me){
-// 			alert('Hello, ' + me.username);
-// 		});
-// 	});
+//  SC.connect(function(){
+//      SC.get('/me', function(me){
+//          alert('Hello, ' + me.username);
+//      });
+//  });
 // }
 
 // mySounds();
