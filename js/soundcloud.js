@@ -36,7 +36,7 @@
     var $artwork = document.getElementById('artwork');
     var $play = document.getElementById('play');
     var $pause = document.getElementById('pause');
-    var status = 0, track;
+    var status = 0, track; //track starts at 0 meaning not loaded
 
 
 
@@ -50,10 +50,12 @@
         $play.style.visibility = 'hidden';
         $pause.style.visibility = 'initial';
 
+        //checks if the song is loaded
         console.log("Play triggered");
         if( track ){
             track.play();
         }
+        // sets songs state to 1 or "loaded"
         status = 1;
     }
     function pause() {
