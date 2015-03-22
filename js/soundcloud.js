@@ -3,6 +3,7 @@ var trackName = document.getElementById('track-name');
 var artist = document.getElementById('artist');
 var artwork = document.getElementById('artwork');
 
+
 // SC.stream('/tracks/293', function(sound){
 //  play.addEventListener('click', function(e){
 //      sound.start();
@@ -53,8 +54,6 @@ function getArtistName(track){
 }
 
 function getBackground(track){
-    var img = document.createElement('img');
-    img.src = track.artwork_url;
     return track.artwork_url;
 }
 
@@ -77,12 +76,23 @@ function playMusic(track) {
     });
 }
 
-
+function dwnld(track){
+    if(track.downloadable === true){
+        var link = document.createElement('a');
+        var linkText = document.createTextNode('Download Now');
+        link.appendChild(linkText);
+        link.id = 'download';
+        link.href = track.download_url;
+        return document.body.appendChild(link);
+    }else{
+        return "";
+    }
+}
 
 function selectedArtist() {
     SC.get('/tracks', {
         user_id: 483960,
-        limit: 20
+        limit: 30
     }, function(tracks) {
         //console.log(tracks);
         var random = Math.floor(Math.random() * tracks.length);
@@ -92,6 +102,9 @@ function selectedArtist() {
         playMusic(tracks[random]);
         trackName.textContent = getTrackName(tracks[random]);
         artist.textContent = 'Artist: ' + getArtistName(tracks[random]);
+        console.log(getBackground(tracks[random]));
+        artwork.src = getBackground(tracks[random]);
+        dwnld(tracks[random]);
     });
 }
 
