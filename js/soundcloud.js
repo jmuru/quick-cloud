@@ -79,6 +79,7 @@ function playMusic(track) {
 function dwnld(track){
     if(track.downloadable === true){
         var link = document.createElement('a');
+        // creates text in between the opening and closing html tags
         var linkText = document.createTextNode('Download Now');
         link.appendChild(linkText);
         link.id = 'download';
