@@ -36,7 +36,7 @@
     var $artwork = document.getElementById('artwork');
     var $play = document.getElementById('play');
     var $pause = document.getElementById('pause');
-    var status = 0, track; //track starts at 0 meaning not loaded
+    var status = 0, track; //track starts at 0 meaning not loaded, when the window loads
 
 
 
@@ -69,8 +69,8 @@
 
     $pause.addEventListener('click', pause);
 
-    function startStream(_track, cb) {
-        SC.stream('/tracks/' + _track.id, cb);
+    function startStream(_track, callback) {
+        SC.stream('/tracks/' + _track.id, callback);
     }
 
     function dwnld(track) {
@@ -92,15 +92,15 @@
             user_id: 483960,
             limit: 30
         }, function(tracks) {
-            //console.log(tracks);
-            var randomIdx = ~~(Math.random() * tracks.length);
+            // var randomIdx = ~~(Math.random() * tracks.length);
+            var randomIdx = Math.floor(Math.random() * tracks.length);
             var selTrack = tracks[randomIdx];
-
-            // var duration = getTrackDuration(track);
-
             startStream(selTrack, function(_track){
-
+                /* because the variable track is used already (global var), you must redefine
+                track as something else within the scope of its encapsulating function 
+                in order to use it again, look at pause and play functions */
                 track = _track;
+                // if track is loaded then call play function 
                 if( status == 1 ){
                     play();
                 }
